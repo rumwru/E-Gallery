@@ -133,9 +133,9 @@ def favorite_image(id):
 def logout():
     session.pop("user", None)
     return redirect(url_for("home"))
+init_db()
+with app.app_context():
+    db.create_all()
 
 if __name__ == "__main__":
-    init_db()
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
