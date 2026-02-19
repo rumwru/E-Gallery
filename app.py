@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = "secretkey"
+app.secret_key = os.getenv("SECRET_KEY", "secretkey")
 
 # --- KONFIGURASI DATABASE ---
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gallery.db'
@@ -139,3 +139,4 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
