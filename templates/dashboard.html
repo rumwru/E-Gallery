@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>e_ Gallery | Personal</title>
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+<div class="canva-container">
+
+    
+    <header class="canva-header">
+        <div class="logo-text" style="font-weight: bold; font-size: 24px;">e_ Gallery</div>
+        <a href="/logout" class="btn-logout-small">Logout</a>
+    </header>
+
+    <section class="identity-area">
+        <h1>What will you design today?</h1>
+        
+        <div class="user-card-search">
+            <div class="user-info-main">
+                <div class="user-avatar-small">👤</div>
+                <div class="user-details-text">
+                    <h3>{{ user }}</h3>
+                    <span class="badge-active">● Active</span>
+                </div>
+            </div>
+            <div class="role-tag">Standard User</div>
+        </div>
+
+        <div class="quick-links">
+            <button onclick="filterImages('all')" class="tab-btn active" id="btn-all">All Images</button>
+            <button onclick="filterImages('recent')" class="tab-btn" id="btn-recent">Recent</button>
+            <button onclick="filterImages('favorite')" class="tab-btn" id="btn-fav">Favorite</button>
+            
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="photo" id="fileInput" style="display:none;" onchange="this.form.submit()">
+                <button type="button" class="btn-upload" onclick="document.getElementById('fileInput').click()">
+                    + Upload Photo
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section class="content-area">
+        <h2 class="section-title">Image for you</h2>
+
+        <div class="masonry-grid-canva">
+            {% for img in images %}
+            <div class="grid-item">
+                <img src="{{ url_for('static', filename='uploads/' + img.filename) }}" alt="User Photo">
+                
+                <div class="item-overlay">
+                    <a href="/favorite/{{ img.id }}" class="like-btn {% if img.is_favorite %}active{% endif %}">❤️</a>
+                    <a href="/delete/{{ img.id }}" class="delete-btn">🗑️</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
+
+<script>
+function filterImages(category) {
+    // 1. Ubah warna tombol yang aktif
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // 2. Logika filter sederhana (Demo Visual)
+    const grid = document.querySelector('.masonry-grid-canva');
+    if (category === 'recent') {
+        grid.style.opacity = '0.5'; // Efek transisi
+        setTimeout(() => {
+            grid.style.opacity = '1';
+            alert("Menampilkan foto terbaru..."); 
+            // Di sini nanti bisa panggil data dari database via AJAX
+        }, 300);
+    }
+}
+
+function filterImages(category) {
+    // Menghapus class active dari semua tombol
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    
+    // Menambah class active ke tombol yang diklik
+    event.target.classList.add('active');
+
+    console.log("Menyaring kategori: " + category);
+    // Logika lanjutan (Database) akan kita buat setelah ini
+}
+
+</script>
+
+<footer style="text-align: center; padding: 40px 20px; color: #777; font-size: 14px; border-top: 1px solid #eee; margin-top: 50px;">
+        <p>&copy; 2025 <strong>e_ Gallery</strong>. All rights reserved.</p>
+        <p>Created by <strong>Ervan</strong> | Assets used for educational purposes.</p>
+        <p>Logo design via Canva | Images from Pinterest</p>
+    </footer>
+</body>
+</html>
+

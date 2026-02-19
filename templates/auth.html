@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>e_ Gallery | Personal</title>
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}?v=1">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class="wrapper" id="wrapper">
+
+    <!-- LOGIN -->
+    <div class="form-box login">
+        <form action="/login" method="POST">
+            <h2>Sign In</h2>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <p class="error">{{ messages[0] }}</p>
+              {% endif %}
+            {% endwith %}
+
+            <input type="text" name="username" placeholder="Username">
+            <div class="password-field">
+                <input type="password" name="password" id="passLogin" placeholder="Password">
+                <span class="eye-icon" onclick="togglePass('passLogin', this)">👁️</span>
+            </div>
+            <button type="submit">SIGN IN</button>
+        </form>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="form-box register">
+        <form action="/register" method="POST">
+            <h2>Create Account</h2>
+            <input type="text" name="username" placeholder="Username">
+            <div class="password-field">
+                <input type="password" name="password" id="passReg" placeholder="Password">
+                <span class="eye-icon" onclick="togglePass('passReg', this)">👁️</span>
+            </div>
+            <button type="submit">REGISTER</button>
+        </form>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay">
+        <div class="overlay-container">
+
+            <div class="overlay-panel">
+                <h1>Hello, Friend!</h1>
+                <p>Buat akun baru untuk melanjutkan</p>
+                <button type="button" onclick="toggle()">SIGN UP</button>
+            </div>
+
+            <div class="overlay-panel">
+                <h1>Welcome Back!</h1>
+                <p>Sudah punya akun? Silakan login</p>
+                <button type="button" onclick="toggle()">SIGN IN</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>  <!-- ✅ hanya satu penutup -->
+
+<script>
+// Fungsi geser overlay yang sudah ada
+function toggle(){
+    document.getElementById("wrapper").classList.toggle("active");
+}
+
+// Fungsi BARU untuk intip password
+function togglePass(inputId, icon) {
+    const input = document.getElementById(inputId);
+    
+    if (input.type === "password") {
+        input.type = "text";
+        icon.innerHTML = "🙈"; // Ganti jadi monyet tutup mata
+    } else {
+        input.type = "password";
+        icon.innerHTML = "👁️"; // Balik jadi mata
+    }
+}
+</script>
+
+</body>
+</html>

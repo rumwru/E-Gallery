@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="wrapper" id="wrapper">
+
+    <div class="form-box login">
+        <h2>Sign In</h2>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <p class="error">{{ messages[0] }}</p>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">SIGN IN</button>
+        </form>
+    </div>
+
+    <div class="overlay">
+        <h1>Welcome!</h1>
+        <p>Buat akun baru untuk melanjutkan</p>
+        <button onclick="toggle()">SIGN UP</button>
+    </div>
+
+</div>
+
+<script>
+function toggle(){
+    document.getElementById("wrapper").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
