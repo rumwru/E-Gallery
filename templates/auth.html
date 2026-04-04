@@ -14,22 +14,26 @@
 <div class="wrapper" id="wrapper">
 
     <!-- LOGIN -->
-    <div class="form-box login">
+        <div class="form-box login">
         <form action="/login" method="POST">
             <h2>Sign In</h2>
 
             {% with messages = get_flashed_messages() %}
-              {% if messages %}
+            {% if messages %}
                 <p class="error">{{ messages[0] }}</p>
-              {% endif %}
+            {% endif %}
             {% endwith %}
 
             <input type="text" name="username" placeholder="Username">
+            
             <div class="password-field">
                 <input type="password" name="password" id="passLogin" placeholder="Password">
                 <span class="eye-icon" onclick="togglePass('passLogin', this)">👁️</span>
             </div>
+
             <button type="submit">SIGN IN</button>
+
+            <a href="/forgot-password" class="forgot-link">Forgot Password?</a>
         </form>
     </div>
 
