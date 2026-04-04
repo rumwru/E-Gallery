@@ -498,23 +498,63 @@ button:hover {
 
 /* Kotak User (Pengganti Search Bar) */
 .user-card-search {
-    background: white;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 15px 25px;
-    border-radius: 50px; /* Membuat lonjong seperti search bar */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
+    background: #fff;
+    padding: 10px 15px; /* Sedikit lebih ramping */
+    border-radius: 50px;
+    width: 95%;
+    max-width: 400px;
+    margin: 15px auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-.user-info-main { display: flex; align-items: center; gap: 15px; }
+.user-info-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    flex: 1; /* Biar dia ambil sisa ruang yang ada */
+}
+
 .user-avatar-small { font-size: 24px; background: #f0f0f0; padding: 5px 10px; border-radius: 50%; }
-.user-details-text h3 { margin: 0; font-size: 16px; }
-.badge-active { font-size: 12px; color: #2ecc71; font-weight: bold; }
-.role-tag { background: #5f2eea; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; }
+
+.user-details-text {
+    display: flex;
+    flex-direction: column; /* Tetap susun atas-bawah */
+    align-items: flex-start; /* INI KUNCINYA: Paksa semua rata kiri */
+    gap: 2px;               /* Jarak tipis antara nama dan Active */
+    overflow: hidden;
+}
+
+.user-details-text h3 {
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px; /* Batasi biar gak nabrak badge ungu */
+    text-align: left; /* Pastikan teks mulai dari kiri */
+}
+
+.badge-active {
+    font-size: 11px;
+    color: #2ecc71;
+    font-weight: bold;
+    margin: 0;
+    text-align: left; /* Pastikan titik hijaunya mulai dari kiri */
+}
+
+.role-tag {
+    background: #5f2eea;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    flex-shrink: 0;         /* WAJIB: Biar badge ungu gak gepeng */
+    margin-left: 5px;
+}
 
 /* Quick Links Button */
 .quick-links { margin-top: 20px; display: flex; justify-content: center; gap: 10px; }
@@ -622,3 +662,198 @@ button:hover {
 
 .like-btn.active { background: #ff4757; color: white; }
 .delete-btn:hover { background: #ff4757; color: white; }
+
+/* ================= CSS FINAL KHUSUS HP ================= */
+/* ================= FIX FINAL HP: NO TUMPANG TINDIH ================= */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wrapper {
+        width: 100%;
+        max-width: 360px; /* Ramping biar estetik */
+        height: auto;
+        display: flex;
+        flex-direction: column; /* Atas: Form, Bawah: Ungu */
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    /* FORM SECTION (PUTIH) */
+    .form-box {
+        position: relative;
+        width: 100% !important;
+        height: auto !important;
+        padding: 40px 25px;
+        transform: none !important;
+        left: 0 !important;
+        opacity: 1 !important;
+        display: none; /* Sembunyikan default */
+    }
+
+    .login { display: flex; } /* Munculkan login saja */
+
+    /* UNGU SECTION (OVERLAY) - Dibuat 1/5 bagian */
+    .overlay {
+        position: relative;
+        width: 100% !important;
+        height: 100px !important; /* Mungil cuma 1/5 layar */
+        left: 0 !important;
+        transform: none !important;
+        background: #5f2eea;
+    }
+
+    .overlay-container {
+        width: 100% !important;
+        height: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+    }
+
+    .overlay-panel {
+        width: 100% !important;
+        height: 100% !important;
+        padding: 10px 20px !important;
+        transform: none !important;
+        display: flex;
+        flex-direction: row; /* Teks dan tombol sejajar biar hemat tempat */
+        justify-content: space-around;
+        align-items: center;
+        text-align: left;
+    }
+
+    /* Hilangkan deskripsi panjang di HP biar gak penuh */
+    .overlay-panel p { display: none; }
+    .overlay-panel h1 { font-size: 16px; margin: 0; }
+
+    /* Tombol Sign Up/In di HP */
+    .overlay-panel button {
+        padding: 8px 15px;
+        font-size: 11px;
+        background: rgba(255,255,255,0.2);
+        border: 1px solid #fff;
+    }
+
+    /* LOGIKA SWITCH (PENTING) */
+    .wrapper.active .login { display: none; }
+    .wrapper.active .register { display: flex; }
+
+    /* Sembunyikan panel overlay yang gak aktif */
+    .overlay-panel:nth-child(2) { display: none; }
+    .wrapper.active .overlay-panel:nth-child(1) { display: none; }
+    .wrapper.active .overlay-panel:nth-child(2) { display: flex; }
+}
+
+.forgot-link {
+    display: block;
+    text-align: right;
+    font-size: 11px;
+    color: #5f2eea;
+    text-decoration: none;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Container pembungkus utama di dashboard */
+.quick-links {
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+/* Bagian yang bisa digeser ke samping (Horizontal Scroll) */
+.menu-scroll-wrapper {
+    display: flex;             /* Membuat tombol berbaris ke samping */
+    overflow-x: auto;          /* Mengaktifkan fungsi geser */
+    white-space: nowrap;       /* Mencegah tombol turun ke bawah */
+    gap: 12px;                 /* Jarak antar tombol */
+    padding: 5px;
+    -webkit-overflow-scrolling: touch; /* Geser halus di layar sentuh HP */
+    scrollbar-width: none;     /* Sembunyikan garis scrollbar (Firefox) */
+}
+
+/* Sembunyikan garis scrollbar (Chrome, Safari, dan HP Android) */
+.menu-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Memastikan tombol tetap pada ukurannya (tidak gepeng) */
+.tab-btn, .btn-upload {
+    flex: 0 0 auto;
+}
+
+/* --- SETTING DARK MODE --- */
+body.dark-mode {
+    background-color: #121212; /* Hitam pekat */
+    color: #ffffff;
+}
+
+body.dark-mode .canva-container {
+    background-color: #1e1e1e; /* Abu-abu gelap */
+}
+
+body.dark-mode .canva-header,
+body.dark-mode .user-card-search,
+body.dark-mode .identity-area {
+    background-color: #2d2d2d !important;
+    color: white;
+}
+
+body.dark-mode .section-title {
+    color: #a29bfe; /* Warna judul jadi ungu muda */
+}
+
+body.dark-mode .grid-item {
+    background-color: #333;
+}
+
+body.dark-mode footer {
+    border-top: 1px solid #444;
+    color: #888;
+}
+
+/* Supaya preview area juga gelap saat dark mode */
+body.dark-mode #preview-container {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: #a29bfe;
+}
+
+body.dark-mode footer {
+    border-top-color: #333;
+    color: #bbb; /* Warna teks footer jadi lebih terang dikit di background gelap */
+}
+
+/* Efek Shadow untuk setiap kotak gambar */
+.grid-item {
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+    /* Ini rahasianya: Shadow halus agar gambar terlihat "melayang" */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efek saat gambar disorot (Hover) */
+.grid-item:hover {
+    transform: translateY(-5px); /* Gambar naik dikit pas di-hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Shadow makin tebel pas naik */
+}
+
+/* Shadow untuk Preview Area agar tidak kaku */
+#preview-container {
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.15);
+    border: 2px dashed #6c5ce7;
+}
+
+/* Shadow khusus Dark Mode supaya tetap kelihatan */
+body.dark-mode .grid-item {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Shadow lebih gelap di Dark Mode */
+    background: #2d2d2d;
+}
